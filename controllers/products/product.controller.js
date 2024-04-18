@@ -11,7 +11,7 @@ cloudinary.config({
 
 const getAllProducts = async (_, res) => {
     try {
-        const availableProducts = await Product.find({createdAt : '-1'});
+        const availableProducts = await Product.find();
         res.status(200).json({
             status: true,
             data: availableProducts,
