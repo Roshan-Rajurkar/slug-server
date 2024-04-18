@@ -37,7 +37,7 @@ const getProductById = async (req, res) => {
         return res.status(404).json({ message: "Product not found" });
       }
   
-      res.res.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: product
     });
