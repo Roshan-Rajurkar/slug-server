@@ -11,7 +11,7 @@ cloudinary.config({
 
 const getAllProducts = async (_, res) => {
     try {
-        const availableProducts = await Product.find();
+        const availableProducts = await Product.find({createdAt : '-1'});
         res.status(200).json({
             status: true,
             data: availableProducts,
@@ -25,6 +25,27 @@ const getAllProducts = async (_, res) => {
         });
     }
 };
+
+const getProductById = async (req, res) => {
+    try {
+      const productId = req.params.id;
+  
+      // Fetch the product from the database by its ID
+      const product = await Product.findById(productId);
+  
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+  
+      res.res.status(200).json({
+        status: 'success',
+        data: product
+    });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
 
 const addProduct = async (req, res) => {
     // const uploaded_image = await cloudinary.uploader.upload(req.file.path);
@@ -133,4 +154,4 @@ const deleteProduct = async(req,res)  => {
   }
 }
 
-module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct };
+module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductById };
