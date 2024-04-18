@@ -19,9 +19,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     default : 'https://foundersguide.com/wp-content/uploads/2022/01/Untitled-design-2022-01-26T113456.782.jpg'
   },
-  isPublished: {
+  published: {
     type: Boolean,
-    default: false
+    required: true
   },
 },{
     timestamps : true

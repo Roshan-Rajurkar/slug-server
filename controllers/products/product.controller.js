@@ -55,14 +55,14 @@ const addProduct = async (req, res) => {
             name,
             description,
             price,
-            isPublished
+            published
         } = req.body;
 
         const newProduct = new Product({
             name,
             description,
             price,
-            isPublished,
+            published,
             // file: uploaded_image?.secure_url
         });
 
@@ -88,7 +88,7 @@ const updateProduct = async (req, res) => {
             name,
             description,
             price,
-            isPublished,
+            published,
             
         } = req.body;
 
@@ -100,7 +100,7 @@ const updateProduct = async (req, res) => {
                 name,
                 description,
                 price,
-                isPublished,
+                published,
                 file: uploaded_image?.secure_url
             }, { new: true });
         } else {
@@ -108,7 +108,7 @@ const updateProduct = async (req, res) => {
                 name,
                 description,
                 price,
-                isPublished
+                published
             }, { new: true });
         }
 
