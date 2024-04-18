@@ -3,15 +3,15 @@ const cors = require('cors');
 const app = express();
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products/product.routes')
-const connectDB = require('./config/connectDB');
 require('dotenv').config();
 const errorHandler = require('./middlewares/error');
 const cookieParser = require('cookie-parser');
 const verifyToken = require('./middlewares/verifyToken');
+const ConnectDB = require('./config/ConnectDB');
 
 const PORT = process.env.PORT || 5000;
 
-connectDB();
+ConnectDB();
 
 app.use(express.json());
 app.use(cors());
