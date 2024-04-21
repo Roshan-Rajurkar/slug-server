@@ -45,7 +45,6 @@ const checkBlockCustomer = async(req, res) => {
 
         // Toggle the published status
         customer.blocked = !customer.blocked;
-        console.log(customer.blocked)
 
         // Save the updated customer
         await customer.save();
