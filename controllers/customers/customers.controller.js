@@ -13,7 +13,7 @@ const getAllCustomers = async (req, res) => {
             ]
         })
         .sort({ createdAt: orderBy })
-        .limit(limit)
+        .limit(limit);
 
         res.status(200).json({
             status: true,
@@ -28,4 +28,40 @@ const getAllCustomers = async (req, res) => {
     }
 }
 
-module.exports = { getAllCustomers };
+const checkBlockCustomer = async(req, res) => {
+    const {id} = req.params;
+
+    try {
+        // Find the customer by ID
+        const customer = await Customer.findById(id);
+
+        // If the customer doesn't exist
+        if (!customer) {
+            return res.status(400).json({
+                status: false,
+                message: "Customer does not exist."
+            });
+        }
+
+        // Toggle the published status
+        customer.blocked = !customer.blocked;
+        console.log(customer.blocked)
+
+        // Save the updated customer
+        await customer.save();
+
+        res.status(200).json({
+            status: true,
+            data: customer,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "Something went wrong.",
+            error: error.message
+        });
+    }
+}
+
+module.exports = { getAllCustomers, checkBlockCustomer };

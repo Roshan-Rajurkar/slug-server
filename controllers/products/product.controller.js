@@ -28,24 +28,24 @@ const getAllProducts = async (_, res) => {
 
 const getProductById = async (req, res) => {
     try {
-      const productId = req.params.id;
-  
-      // Fetch the product from the database by its ID
-      const product = await Product.findById(productId);
-  
-      if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-  
-      res.status(200).json({
-        status: 'success',
-        data: product
-    });
+        const productId = req.params.id;
+
+        // Fetch the product from the database by its ID
+        const product = await Product.findById(productId);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: product
+        });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Server error" });
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
     }
-  };
+};
 
 const addProduct = async (req, res) => {
     // const uploaded_image = await cloudinary.uploader.upload(req.file.path);
@@ -89,7 +89,7 @@ const updateProduct = async (req, res) => {
             description,
             price,
             published,
-            
+
         } = req.body;
 
         let updatedProduct;
@@ -133,24 +133,24 @@ const updateProduct = async (req, res) => {
     }
 };
 
-const deleteProduct = async(req,res)  => {
-  
-  try {
-    const product_id = req.params.id;
+const deleteProduct = async (req, res) => {
 
-    const deletedProduct = await Product.findByIdAndDelete(product_id, {new : true});
+    try {
+        const product_id = req.params.id;
 
-      res.status(200).json({
-        status: 'success',
-        data: deletedProduct
-    });
+        const deletedProduct = await Product.findByIdAndDelete(product_id, { new: true });
+
+        res.status(200).json({
+            status: 'success',
+            data: deletedProduct
+        });
     } catch (error) {
-      res.status(500).json({
-        status: 'error',
-        message: 'Failed to update product',
-        error: error.message
-    });
-  }
+        res.status(500).json({
+            status: 'error',
+            message: 'Failed to update product',
+            error: error.message
+        });
+    }
 }
 
 module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductById };
