@@ -4,6 +4,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products/product.routes')
 const customerRoutes = require('./routes/customers/customers.route')
+const orderRoutes = require('./routes/orders/orders.routes')
 require('dotenv').config();
 const errorHandler = require('./middlewares/error');
 const cookieParser = require('cookie-parser');
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 app.use('/api/auth', authRoutes);
-app.use('/api/app', productRoutes, customerRoutes);
+app.use('/api/app', productRoutes, customerRoutes, orderRoutes);
 app.use(errorHandler);
 app.get('/', (req, res) => {
     res.render('home')
