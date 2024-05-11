@@ -17,6 +17,30 @@ const Order = require('../../models/Order')
     }
 }
 
+const getOrderById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'orderId is required.' });
+    }
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({success : false,  error: 'Order not found.' });
+    }
+
+    return res.status(200).json({
+      success : true, 
+      data : order 
+    });
+  } catch (error) {
+    console.error('Error fetching order by ID:', error);
+    return res.status(500).json({success : false,  error: 'Internal server error.' });
+  }
+};
+
 const updateOrderStatusById = async (req, res) => {
     try {
         const { orderId } = req.params;
@@ -39,6 +63,5 @@ const updateOrderStatusById = async (req, res) => {
       }
 }
 
-// update the status of particular order
 
-module.exports = { getOrders, updateOrderStatusById };
+module.exports = { getOrders, updateOrderStatusById, getOrderById };
