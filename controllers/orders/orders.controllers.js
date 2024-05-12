@@ -3,7 +3,7 @@ const Order = require('../../models/Order')
 // get all orders from database
  const getOrders = async(req, res) => {
     try {
-        const orders = await Order.find();
+        const orders = await Order.find().sort({createdAt : -1});
         res.status(200).json({
             status : true, 
             data : orders

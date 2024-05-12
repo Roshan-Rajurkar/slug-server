@@ -48,22 +48,29 @@ const getProductById = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-    // const uploaded_image = await cloudinary.uploader.upload(req.file.path);
-
     try {
         const {
             name,
             description,
             price,
-            published
+            published,
         } = req.body;
 
+        if(!name || !description || !price || !published)
+            res.status(500).json({
+                status: 'error',
+                message: 'please fill all the details',
+                error: error.message
+            })
+
+        const uploaded_image = await cloudinary.uploader.upload(req.file.path);
+        
         const newProduct = new Product({
             name,
             description,
             price,
             published,
-            // file: uploaded_image?.secure_url
+            file: uploaded_image?.secure_url
         });
 
         const savedProduct = await newProduct.save();
@@ -89,7 +96,6 @@ const updateProduct = async (req, res) => {
             description,
             price,
             published,
-
         } = req.body;
 
         let updatedProduct;
@@ -154,3 +160,4 @@ const deleteProduct = async (req, res) => {
 }
 
 module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductById };
+
