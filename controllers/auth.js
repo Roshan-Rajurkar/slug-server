@@ -171,6 +171,37 @@ const resetpassword = async (req, res, next) => {
     }
 };
 
+const updatePassword = async(req, res) => {
+
+    const {userId, newPassword} = req.body;
+
+    try {
+        const user = await User.findById(userId)
+
+        if (!user) {
+            return next(new ErrorResponse('Invalid or expired reset token', 400));
+        }
+
+        const isSamePassword = await bcrypt.compare(newPassword, user.password);
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        S
+        user.password = hashedPassword;
+
+        await user.save();
+
+        res.status(200).json({ success: true, message: "Password Updated" });
+
+        if (isSamePassword) {
+            return next(new ErrorResponse('Password recently used', 400));
+        }
+
+    } catch (error) {
+        
+    }
+
+}
+
 const getProfile = async (req, res) => {
 
     const userId = req.userId;
@@ -220,4 +251,4 @@ const logout = async (req, res, next) => {
     }
 };
 
-module.exports = { register, login, forgotpassword, resetpassword, getProfile, logout };
+module.exports = { register, login, forgotpassword, updatePassword, resetpassword, getProfile, logout };
