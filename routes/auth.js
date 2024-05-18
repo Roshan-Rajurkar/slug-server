@@ -14,7 +14,7 @@ router.put("/resetpassword/:resetPasswordToken", resetpassword);
 
 router.get("/getprofile",verifyToken, getProfile);
 
-router.put("/update_password",verifyToken, updatePassword);
+router.put("/update_password", updatePassword);
 
 router.get("/logout",verifyToken, logout);
 
