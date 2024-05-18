@@ -184,20 +184,24 @@ const updatePassword = async(req, res) => {
 
         const isSamePassword = await bcrypt.compare(newPassword, user.password);
 
+        if (isSamePassword) {
+            return next(new ErrorResponse('Password recently used', 400));
+        }
+
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        S
+        
         user.password = hashedPassword;
 
         await user.save();
 
         res.status(200).json({ success: true, message: "Password Updated" });
 
-        if (isSamePassword) {
-            return next(new ErrorResponse('Password recently used', 400));
-        }
 
     } catch (error) {
-        
+        return res.status(401).json({
+            status: false,
+            message: 'something went wrong',
+        });
     }
 
 }
