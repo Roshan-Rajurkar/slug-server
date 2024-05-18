@@ -176,7 +176,8 @@ const updatePassword = async(req, res) => {
     const {userId, newPassword} = req.body;
 
     try {
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).select("password");
+        console.log(user)
 
         if (!user) {
             return next(new ErrorResponse('Invalid or expired reset token', 400));
